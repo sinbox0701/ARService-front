@@ -1,6 +1,6 @@
-import { useReactiveVar } from "@apollo/client";
+import { ApolloProvider, useReactiveVar } from "@apollo/client";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom"
-import { isLoggedInVar } from "./apollo";
+import { client, isLoggedInVar } from "./apollo";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles, lightTheme } from "./styles";
 import routes from "./routes";
@@ -15,33 +15,35 @@ import { HelmetProvider } from "react-helmet-async";
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
   return (
-    <HelmetProvider>
-        <ThemeProvider theme={lightTheme}>
-        <GlobalStyles/>
-        <Router>
-          <Switch>
-            <Route path={routes.home} exact>
-              {isLoggedIn ? <Home/> : <Login/>}
-            </Route>
-            {!isLoggedIn ? (
-              <Route path={routes.signUp}>
-              <Signup/>
-            </Route>
-            ) : null}
-            <Route path={routes.myPage} exact>
-              <MyPage/>
-            </Route>
-            <Route path={routes.add}>
-              <MyPagePlus/>
-            </Route>
-            <Route path={routes.admin}>
-              {isLoggedIn ? <Admin/> : <Login/>}
-            </Route>
-            <Redirect to="/" />
-          </Switch>
-        </Router>
-      </ThemeProvider>
-    </HelmetProvider>
+    <ApolloProvider client={client}>
+          <HelmetProvider>
+          <ThemeProvider theme={lightTheme}>
+          <GlobalStyles/>
+          <Router>
+            <Switch>
+              <Route path={routes.home} exact>
+                {isLoggedIn ? <Home/> : <Login/>}
+              </Route>
+              {!isLoggedIn ? (
+                <Route path={routes.signUp}>
+                <Signup/>
+              </Route>
+              ) : null}
+              <Route path={routes.myPage} exact>
+                <MyPage/>
+              </Route>
+              <Route path={routes.add}>
+                <MyPagePlus/>
+              </Route>
+              <Route path={routes.admin}>
+                {isLoggedIn ? <Admin/> : <Login/>}
+              </Route>
+              <Redirect to="/" />
+            </Switch>
+          </Router>
+        </ThemeProvider>
+      </HelmetProvider>
+    </ApolloProvider>
   );
 }
  

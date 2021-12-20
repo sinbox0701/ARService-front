@@ -7,7 +7,7 @@
 - [ ] Arch.
 
 ## Screens
-- [ ] Login
+- [x] Login
 - [ ] SignUp
 - [ ] Home
 - [ ] Admin
