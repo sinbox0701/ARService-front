@@ -7,10 +7,12 @@ import BottomBox from "../components/auth/BottomBox";
 import Input from "../components/auth/Input";
 import Button from "../components/auth/Button";
 import routes from "../routes";
+import { Helmet } from "react-helmet-async";
 
 export const Login = () => {
     return (
         <AuthLayout>
+            <Helmet><title>Login</title></Helmet>
             <FormBox>
                 <div>
                     <FontAwesomeIcon icon={faPhoneVolume} size="3x"/>

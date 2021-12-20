@@ -10,35 +10,38 @@ import { Login } from "./screens/Login";
 import { MyPage } from "./screens/MyPage";
 import { MyPagePlus } from "./screens/MyPagePlus";
 import { Signup } from "./screens/Signup";
+import { HelmetProvider } from "react-helmet-async";
 
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
   return (
-    <ThemeProvider theme={lightTheme}>
-      <GlobalStyles/>
-      <Router>
-        <Switch>
-          <Route path={routes.home} exact>
-            {isLoggedIn ? <Home/> : <Login/>}
-          </Route>
-          {!isLoggedIn ? (
-            <Route path={routes.signUp}>
-            <Signup/>
-          </Route>
-          ) : null}
-          <Route path={routes.myPage} exact>
-            <MyPage/>
-          </Route>
-          <Route path={routes.add}>
-            <MyPagePlus/>
-          </Route>
-          <Route path={routes.admin}>
-            {isLoggedIn ? <Admin/> : <Login/>}
-          </Route>
-          <Redirect to="/" />
-        </Switch>
-      </Router>
-    </ThemeProvider>
+    <HelmetProvider>
+        <ThemeProvider theme={lightTheme}>
+        <GlobalStyles/>
+        <Router>
+          <Switch>
+            <Route path={routes.home} exact>
+              {isLoggedIn ? <Home/> : <Login/>}
+            </Route>
+            {!isLoggedIn ? (
+              <Route path={routes.signUp}>
+              <Signup/>
+            </Route>
+            ) : null}
+            <Route path={routes.myPage} exact>
+              <MyPage/>
+            </Route>
+            <Route path={routes.add}>
+              <MyPagePlus/>
+            </Route>
+            <Route path={routes.admin}>
+              {isLoggedIn ? <Admin/> : <Login/>}
+            </Route>
+            <Redirect to="/" />
+          </Switch>
+        </Router>
+      </ThemeProvider>
+    </HelmetProvider>
   );
 }
  

@@ -3,7 +3,7 @@
 ## Setting
 - [x] Router
 - [ ] Authentication
-- [ ] Styles
+- [x] Styles
 - [ ] Arch.
 
 ## Screens
