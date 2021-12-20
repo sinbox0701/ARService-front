@@ -1,4 +1,8 @@
+import { useReactiveVar } from "@apollo/client";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom"
+import { isLoggedInVar } from "./apollo";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyles, lightTheme } from "./styles";
 import routes from "./routes";
 import { Admin } from "./screens/Admin";
 import { Home } from "./screens/Home";
@@ -8,17 +12,20 @@ import { MyPagePlus } from "./screens/MyPagePlus";
 import { Signup } from "./screens/Signup";
 
 function App() {
-  const isLoggedIn = true;
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
   return (
-    <div>
+    <ThemeProvider theme={lightTheme}>
+      <GlobalStyles/>
       <Router>
         <Switch>
           <Route path={routes.home} exact>
             {isLoggedIn ? <Home/> : <Login/>}
           </Route>
-          <Route path={routes.signUp}>
+          {!isLoggedIn ? (
+            <Route path={routes.signUp}>
             <Signup/>
           </Route>
+          ) : null}
           <Route path={routes.myPage} exact>
             <MyPage/>
           </Route>
@@ -31,7 +38,7 @@ function App() {
           <Redirect to="/" />
         </Switch>
       </Router>
-    </div>
+    </ThemeProvider>
   );
 }
  
