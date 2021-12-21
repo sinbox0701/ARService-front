@@ -4,7 +4,7 @@ import { createUploadLink } from "apollo-upload-client"
 
 const TOKEN = "token";
 
-export const isLoggedInVar = makeVar(false);
+export const isLoggedInVar = makeVar(Boolean(localStorage.getItem(TOKEN)));
 
 export const logUserIn = (token) => {
     localStorage.setItem(TOKEN,token);
