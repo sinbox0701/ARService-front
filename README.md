@@ -8,7 +8,7 @@
 
 ## Screens
 - [x] Login
-- [ ] SignUp
+- [x] SignUp
 - [ ] Home
 - [ ] Admin
 - [ ] MyPage

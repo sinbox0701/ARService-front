@@ -32,7 +32,11 @@ const LOGIN_MUTATION = gql`
 export const Login = () => {
     const location = useLocation();
     const {register,handleSubmit,errors,formState,setError,clearErrors,getValues} = useForm({
-        mode:"onChange"
+        mode:"onChange",
+        defaultValues:{
+            nickname:location?.state?.nickname || "",
+            password:location?.state?.password || ""
+        }
     });
     const onCompleted = (data) => {
         const {
