@@ -4,12 +4,12 @@
 - [x] Router
 - [ ] Authentication
 - [x] Styles
-- [ ] Arch.
+- [x] Arch.
 
 ## Screens
 - [x] Login
 - [x] SignUp
-- [ ] Home
+- [x] Home / 전화 넘기는 부분
 - [ ] Admin
-- [ ] MyPage
+- [x] MyPage / 전화 넘기는 부분
 - [ ] MyPagePlus

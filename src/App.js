@@ -30,10 +30,12 @@ function App() {
                 <Signup/>
               </Route>
               ) : null}
-              <Route path={routes.myPage} exact>
-                <MyPage/>
+              <Route path={`${routes.myPage}/:nickname`} exact>
+                <Layout> 
+                  <MyPage/>
+                </Layout>
               </Route>
-              <Route path={routes.add}>
+              <Route path={`${routes.myPage}/:nickname/add`}>
                 <MyPagePlus/>
               </Route>
               <Route path={routes.admin}>
