@@ -3,6 +3,9 @@ import { setContext } from "@apollo/client/link/context"
 import { createUploadLink } from "apollo-upload-client"
 
 const TOKEN = "token";
+let ALARM = true;
+
+export const alarmModeVar = makeVar(ALARM);
 
 export const isLoggedInVar = makeVar(Boolean(localStorage.getItem(TOKEN)));
 

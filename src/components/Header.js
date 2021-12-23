@@ -1,10 +1,10 @@
-import { useReactiveVar } from "@apollo/client";
-import { faBell } from "@fortawesome/free-regular-svg-icons";
+import { gql, useMutation, useReactiveVar } from "@apollo/client";
+import { faBell, faBellSlash } from "@fortawesome/free-regular-svg-icons";
 import { faPhoneVolume, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { isLoggedInVar } from "../apollo";
+import { alarmModeVar, isLoggedInVar } from "../apollo";
 import { useUser } from "../hooks/useUser";
 import routes from "../routes";
 
@@ -37,14 +37,6 @@ const Icon = styled.span`
     margin-left: 15px;
 `;
  
-const Btn = styled.span`
-    background-color: ${(props) => props.theme.accent};
-    color: white;
-    border-radius: 4px;
-    padding: 5px 15px;
-    font-weight: 600;
-`;
- 
 const Button = styled.span`
     background-color: ${(props) => props.theme.accent};
     border-radius: 4px;
@@ -53,15 +45,53 @@ const Button = styled.span`
     font-weight: 600;
 `;
 
+const AlarmModeBtn = styled.span`
+    cursor: pointer;
+`;
+
+const TOGGLE_ALARM = gql`
+    mutation toggleAlarm{
+        toggleAlarm{
+            ok
+            error
+        }
+    }
+`;
+
 export const Header = () => {
     const isLoggedIn = useReactiveVar(isLoggedInVar);
     const loggedInUser = useUser();
+    const alarmMode = useReactiveVar(alarmModeVar);
+    const [toggleAlarm] = useMutation(TOGGLE_ALARM)
+    const onSubmit = () => {
+        const toggleAlarmUpdate = (cache,result) =>{
+            const {
+                data:{
+                    toggleAlarm:{ok}
+                }
+            } = result;
+            if(!ok){
+                return ;
+            }
+            cache.modify({
+                id:`User:${loggedInUser.me.id}`,
+                fields:{
+                    ignored(prev){
+                        return !prev;
+                    }
+                }
+            })
+        };
+        toggleAlarm({
+            update:toggleAlarmUpdate
+        });
+        alarmModeVar(!alarmMode);
+    };
     return (
         <SHeader>
             <Wrapper>
                 <Column>
                     <FontAwesomeIcon icon={faPhoneVolume} size="lg"/>
-                
                     {isLoggedIn ? (
                         <>
                         {loggedInUser?.me?.bio === "M" ?(
@@ -82,7 +112,9 @@ export const Header = () => {
                           더보기 
                         </Icon>
                         <Icon>
-                          <FontAwesomeIcon icon={faBell} size="lg" />  
+                            <AlarmModeBtn onClick={onSubmit}>
+                                <FontAwesomeIcon icon={ alarmMode ? faBell : faBellSlash} size="lg" />  
+                            </AlarmModeBtn>
                         </Icon>
                         </>
                     ) : (

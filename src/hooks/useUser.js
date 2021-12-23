@@ -5,6 +5,7 @@ import { isLoggedInVar, logUserOut } from "../apollo";
 const ME_QUERY = gql`
     query me {
         me {
+            id
             nickname
             profile
             bio
