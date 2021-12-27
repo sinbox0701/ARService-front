@@ -2,6 +2,7 @@ import { gql, useMutation, useReactiveVar } from "@apollo/client";
 import { faBell, faBellSlash } from "@fortawesome/free-regular-svg-icons";
 import { faPhoneVolume, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { alarmModeVar, isLoggedInVar } from "../apollo";
@@ -59,6 +60,7 @@ const TOGGLE_ALARM = gql`
 `;
 
 export const Header = () => {
+    const history = useHistory();
     const isLoggedIn = useReactiveVar(isLoggedInVar);
     const loggedInUser = useUser();
     const alarmMode = useReactiveVar(alarmModeVar);
@@ -91,9 +93,12 @@ export const Header = () => {
         <SHeader>
             <Wrapper>
                 <Column>
-                    <FontAwesomeIcon icon={faPhoneVolume} size="lg"/>
+                    <Icon onClick={()=>history.goBack()} >
+                        🔙
+                    </Icon>
                     {isLoggedIn ? (
                         <>
+                        
                         {loggedInUser?.me?.bio === "M" ?(
                             <>
                             <Icon>
@@ -109,7 +114,9 @@ export const Header = () => {
                             </Icon>
                         )}
                         <Icon>
-                          더보기 
+                            <Link to={`${routes.myPage}/${loggedInUser?.me?.nickname}/add`}>
+                                더보기 
+                            </Link>
                         </Icon>
                         <Icon>
                             <AlarmModeBtn onClick={onSubmit}>

@@ -12,6 +12,9 @@ import { MyPagePlus } from "./screens/MyPagePlus";
 import { Signup } from "./screens/Signup";
 import { HelmetProvider } from "react-helmet-async";
 import { Layout } from "./components/Layout";
+import { Question } from "./components/add/Question";
+import { Notification } from "./components/add/Notification";
+import { Information } from "./components/add/Information";
 
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
@@ -36,7 +39,24 @@ function App() {
                 </Layout>
               </Route>
               <Route path={`${routes.myPage}/:nickname/add`}>
-                <MyPagePlus/>
+                <Layout>
+                  <MyPagePlus/>
+                </Layout>
+              </Route>
+              <Route path={`${routes.myPage}/:nickname/notification`}>
+                <Layout>
+                  <Notification/>
+                </Layout>
+              </Route>
+              <Route path={`${routes.myPage}/:nickname/qustion`}>
+                <Layout>
+                  <Question/>
+                </Layout>
+              </Route>
+              <Route path={`${routes.myPage}/:nickname/information`}>
+                <Layout>
+                  <Information/>
+                </Layout>
               </Route>
               <Route path={routes.admin}>
                 {isLoggedIn ? <Admin/> : <Login/>}
