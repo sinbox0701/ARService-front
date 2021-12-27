@@ -12,7 +12,7 @@ import { MyPagePlus } from "./screens/MyPagePlus";
 import { Signup } from "./screens/Signup";
 import { HelmetProvider } from "react-helmet-async";
 import { Layout } from "./components/Layout";
-import { Question } from "./components/add/Question";
+import { QuestionList } from "./components/add/QuestionList";
 import { Notification } from "./components/add/Notification";
 import { Information } from "./components/add/Information";
 
@@ -48,9 +48,9 @@ function App() {
                   <Notification/>
                 </Layout>
               </Route>
-              <Route path={`${routes.myPage}/:nickname/qustion`}>
+              <Route path={`${routes.myPage}/:nickname/question`}>
                 <Layout>
-                  <Question/>
+                  <QuestionList/>
                 </Layout>
               </Route>
               <Route path={`${routes.myPage}/:nickname/information`}>

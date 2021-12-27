@@ -29,7 +29,9 @@ export const MyPagePlus = () => {
             <Link to={`${routes.myPage}/${loggedInUser?.me?.nickname}/notification`}>
                 <button style={{marginTop:"10px"}}>공지사항</button>
             </Link>
-            <button style={{marginTop:"10px"}}>고객센터</button>
+            <Link to={`${routes.myPage}/${loggedInUser?.me?.nickname}/question`}>
+                <button style={{marginTop:"10px"}}>고객센터</button>
+            </Link>
             <button style={{marginTop:"10px"}}>이용안내</button>
             <button style={{marginTop:"10px"}}>포인트 교환 신청</button>
         </Container>
