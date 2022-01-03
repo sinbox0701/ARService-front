@@ -2,7 +2,7 @@
 
 ## Setting
 - [x] Router
-- [ ] Authentication
+- [x] Authentication
 - [x] Styles
 - [x] Arch.
 
@@ -12,8 +12,8 @@
 - [x] Home / 전화 넘기는 부분
 - [ ] Admin
 - [x] MyPage / 전화 넘기는 부분
-- [ ] MyPagePlus
+- [x] MyPagePlus
 - [x] 공지사항 보기
-- [ ] 문의하기
+- [x] 문의하기
 - [ ] 이용안내
 - [ ] 포인트 교환 신텅

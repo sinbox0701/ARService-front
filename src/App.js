@@ -15,6 +15,7 @@ import { Layout } from "./components/Layout";
 import { QuestionList } from "./components/add/QuestionList";
 import { Notification } from "./components/add/Notification";
 import { Information } from "./components/add/Information";
+import {AdminContainer} from "./screens/AdminContainer";
 
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
@@ -59,7 +60,7 @@ function App() {
                 </Layout>
               </Route>
               <Route path={routes.admin}>
-                {isLoggedIn ? <Admin/> : <Login/>}
+                {isLoggedIn ? <AdminContainer><Admin/></AdminContainer> : <Login/>}
               </Route>
               <Redirect to="/" />
             </Switch>
