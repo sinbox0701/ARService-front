@@ -15,7 +15,7 @@ import { Layout } from "./components/Layout";
 import { QuestionList } from "./components/add/QuestionList";
 import { Notification } from "./components/add/Notification";
 import { Information } from "./components/add/Information";
-import {AdminContainer} from "./screens/AdminContainer";
+import {AdminContainer} from "./components/Admin/AdminContainer";
 
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);

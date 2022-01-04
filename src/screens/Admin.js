@@ -1,27 +1,17 @@
-import { gql, useQuery } from "@apollo/client";
-import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
 
-const ME_QUERY = gql`
-    query me {
-        me {
-            isManaged
-        }
-    }
-`;
+import { useEffect, useState } from "react";
+import SearchUser from "../components/Admin/SearchUser";
+import { Container } from "../components/shared"
 
-export const Admin = () => {
-    const history = useHistory();
-    const {data:Me} = useQuery(ME_QUERY);
-    useEffect(()=>{
-        if(Me?.me?.isManaged === false && Me?.me?.isManaged === undefined){
-            history.push("/");
-        }
-        
-    },[Me]);
+export const Admin = (props) => {
+    const {data} = props;
+    
+    
     return (
-        <>
-        <h1>Admin</h1>
-        </>
+        <Container>
+            {data ===  "전체" ||  data === "여자" ? (
+                <SearchUser bio={data}/>
+            ) : <h1>Admin</h1> }
+        </Container>
     )
 }

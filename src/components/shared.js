@@ -1,5 +1,13 @@
 import styled from "styled-components";
  
+export const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    padding: ${ props => props.p };
+`;
+
 export const BaseBox = styled.div`
     background-color: white;
     border: 1px solid ${(props) => props.theme.borderColor};
@@ -39,6 +47,22 @@ export const Input = styled.input`
     margin-top: ${ props => props.mt };
 `;
 
+export const SearchInput = styled.input`
+    width: 300px;
+    border: 0.5px solid ${(props) => (props.hasError ? "tomato" : props.theme.borderColor)};
+    padding: 0 20px;
+    margin-botton: 10px;
+    border-radius: 10px;
+    background-color:#fafafa;
+    border: 1px solid #C4C4C4;
+    &::placeholder{
+        font-size: 17px;
+    }
+    width: ${ props => props.width };
+    height: ${ props => props.height };
+    margin-top: ${ props => props.mt };
+`;
+
 export const Flex = styled.div`
     display: flex;
     flex-direction: column;
@@ -61,6 +85,17 @@ export const Submitbutton = styled.input`
     margin-left: ${ props => props.ml };
     height: ${ props => props.height };
     margin: ${ props => props.m };
+`;
+
+export const SearchSubmitbutton = styled.input`
+    border:none;
+    background-color: grey;
+    color: white;
+    text-align:center;
+    font-weight: 600;
+    width: 40px;
+    height: 20px;
+    font-size: 10px;
 `;
 
 export const Absolute = styled.div`
