@@ -9,8 +9,8 @@ import DatePicker from "react-datepicker";
 import styled from 'styled-components';
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from 'date-fns/esm/locale';
-import { useState } from 'react';
-import { gql } from '@apollo/client';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 const DateContainer = styled.div`
     display:flex;
@@ -29,72 +29,39 @@ const SDatePicker = styled(DatePicker)`
     margin-right:10px;
 `;
 
-const SEARCH_USER = gql`
-    query searchUser(
-            $keyword:String, 
-            $searchType:Int,
-            $bio:SEX, 
-            $createdMinY:String,
-            $createdMinM:String,
-            $createdMinD:String 
-            $createdMaxY:String,
-            $createdMaxM:String,
-            $createdMaxD:String
-        ){
-            searchUser(
-                keyword:$keyword
-                searchType:$searchType
-                bio:$bio
-                createdMinY:$createdMinY
-                createdMinM:$createdMinM
-                createdMinD:$createdMinD
-                createdMaxY:$createdMaxY
-                createdMaxM:$createdMaxM
-                createdMaxD:$createdMaxD
-            ){
-                nickname
-                age
-                bio
-                profile
-                intro
-                local
-                phone 
-                email
-                loginCount 
-                createdAt
-                updatedAt 
-            }
-        }
-`;
 
-const SearchBar = ({bio}) =>  {
+const SearchBar = ({bio,setData}) =>  {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+    const {register,handleSubmit,getValues} = useForm({
+        mode:"onChange"
+    });
+    const onSubmitValid = (data) => {
+        const {searchType, keyword} = getValues();
+        let createdMinY = "";
+        let createdMinM = "";
+        let createdMinD = "";
+        let createdMaxY = "";
+        let createdMaxM = "";
+        let createdMaxD = "";
+        if(startDate){
+            createdMinY = startDate.getFullYear();
+            createdMinM = startDate.getMonth() + 1;
+            createdMinD = startDate.getDate();
+        }
+        if(endDate){
+            createdMaxY = endDate.getFullYear();
+            createdMaxM = endDate.getMonth() + 1;
+            createdMaxD = endDate.getDate();
+        }
+
+        setData([searchType,keyword, createdMinY, createdMinM, createdMinD, createdMaxY, createdMaxM, createdMaxD]);
+    }
     return (
         <TableContainer component={Paper}>
+            <form onSubmit={handleSubmit(onSubmitValid)}>
             <Table className="tb_search" style={{alignContent:"center"}}>
                 <TableBody>
-                <TableRow>
-                    <TableCell className="col2">
-                        검색
-                    </TableCell>
-                    <TableCell className="col3">
-                        <select name="search_kind" className="select">
-                          <option value="multi">통합검색</option>
-                          <option value="id">전화번호</option>
-                        </select>
-                            에서 
-                        <select name="sk" className="select">
-                          <option value="i" selected>검색단어를 포함</option>
-                          <option value="f">검색단어로 시작</option>
-                          <option value="s">검색단어와 일치</option>
-                        </select>
-                        으로 
-                        <SearchInput type="text" name="search_data" placeholder="단어 입력" className="input" />
-                        을 
-                        <SearchSubmitbutton type="submit" value="검색" className="inputc1" />
-                    </TableCell>
-                </TableRow>
                 <TableRow>
                     <TableCell className="col2">
                         범위
@@ -126,15 +93,28 @@ const SearchBar = ({bio}) =>  {
                 </TableRow>
                 <TableRow>
                     <TableCell className="col2">
-                        설정
+                        검색
                     </TableCell>
                     <TableCell className="col3">
-                        한페이지에 리스트 수 <input type="text" name="count_a_page" size={3} defaultValue={20} style={{textAlign: 'right'}} /> 
-                        페이지 블럭 수 <input type="text" name="page_block" size={3} defaultValue={10} style={{textAlign: 'right'}} />
+                        <select name="search_kind" className="select">
+                          <option value="multi">이름검색</option>
+                          <option value="phone">전화번호</option>
+                        </select>
+                            에서 
+                        <select name="searchType" ref={register()} className="select">
+                          <option value={0}>검색단어로 시작</option>
+                          <option value={1}>검색단어를 포함</option>
+                          <option value={2}>검색단어와 일치</option>
+                        </select>
+                        으로 
+                        <SearchInput type="text" name="keyword" placeholder="단어 입력"  ref={register()} />
+                        을 
+                        <SearchSubmitbutton type="submit" value="검색" className="inputc1" />
                     </TableCell>
                 </TableRow>
                 </TableBody>
             </Table>
+            </form>
         </TableContainer>
     );
 }

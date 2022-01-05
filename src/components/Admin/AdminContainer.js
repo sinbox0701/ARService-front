@@ -9,9 +9,10 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { gql, useQuery } from "@apollo/client";
 import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useState } from 'react';
 import { ListItemButton } from '@mui/material';
+import routes from '../../routes';
 
 const ME_QUERY = gql`
     query me {
@@ -56,7 +57,9 @@ export const AdminContainer = ({children}) => {
         variant="permanent"
         anchor="left"
       >
-        <Toolbar />
+        <Toolbar>
+          <Link to={routes.home}>바로가기</Link>
+        </Toolbar>
         <Divider />
         <List>
           <h1>회원</h1>
@@ -68,16 +71,67 @@ export const AdminContainer = ({children}) => {
         </List>
         <Divider />
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItemButton button key={text}value={text}  onClick={() => onClick(text)}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <div>1</div> : <div>2</div>}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
+          <h1>결제</h1>
+          {['결제전체', '성공', '실패','[구글결제]'].map((text, index) => (
+            <ListItemButton key={text} value={text} selected={selectedIndex === `결제${index}`} onClick={() => onClick(text,`결제${index}`)}>
+            <ListItemText primary={text} />
+          </ListItemButton>
           ))}
         </List>
         <Divider />
+        <List>
+          <h1>환급</h1>
+          {['신청중', '완료'].map((text, index) => (
+            <ListItemButton key={text} value={text} selected={selectedIndex === `환급${index}`} onClick={() => onClick(text,`환급${index}`)}>
+            <ListItemText primary={text} />
+          </ListItemButton>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          <h1>푸쉬</h1>
+          {['푸쉬보내기','푸쉬보내기(중년휴게텔)' ].map((text, index) => (
+            <ListItemButton key={text} value={text} selected={selectedIndex === `푸쉬${index}`} onClick={() => onClick(text,`푸쉬${index}`)}>
+            <ListItemText primary={text} />
+          </ListItemButton>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          <h1>포인트</h1>
+          {['포인트 목록'].map((text, index) => (
+            <ListItemButton key={text} value={text} selected={selectedIndex === `포인트${index}`} onClick={() => onClick(text,`포인트${index}`)}>
+            <ListItemText primary={text} />
+          </ListItemButton>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          <h1>통화내역</h1>
+          {['통화 목록'].map((text, index) => (
+            <ListItemButton key={text} value={text} selected={selectedIndex === `통화내역${index}`} onClick={() => onClick(text,`통화내역${index}`)}>
+            <ListItemText primary={text} />
+          </ListItemButton>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          <h1>게시판</h1>
+          {['ARS게시판(1)','ARS게시판(2)','ARS게시판(3)','ARS게시판(4)','고객문의','계좌이체','공지사항' ].map((text, index) => (
+            <ListItemButton key={text} value={text} selected={selectedIndex === `게시판${index}`} onClick={() => onClick(text,`게시판${index}`)}>
+            <ListItemText primary={text} />
+          </ListItemButton>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          <h1>관리자 설정</h1>
+          {['비번 변경', '관리자 추가'].map((text, index) => (
+            <ListItemButton key={text} value={text} selected={selectedIndex === `관리자${index}`} onClick={() => onClick(text,`관리자${index}`)}>
+            <ListItemText primary={text} />
+          </ListItemButton>
+          ))}
+        </List>
       </Drawer>
 
       <Box
