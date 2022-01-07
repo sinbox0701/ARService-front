@@ -13,6 +13,5 @@ const Img = styled.img`
 `;
 
 export const Avatar = ({url="", lg=false}) => {
-    console.log(url);
     return <SAvatar lg={lg}>{url !== "" ? <Img src={url}/> : null}</SAvatar>
 }
