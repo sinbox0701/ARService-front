@@ -1,7 +1,9 @@
-
-import { useEffect, useState } from "react";
+import { Notification } from "../components/add/Notification";
+import { QuestionList } from "../components/add/QuestionList";
 import AddManager from "../components/Admin/AddManager";
 import ChangePassword from "../components/Admin/ChangePassword";
+import { NotificationManager } from "../components/Admin/NotificationManager";
+import { QuestionListManager } from "../components/Admin/QuestionListManager";
 import SearchUser from "../components/Admin/SearchUser";
 import { Container } from "../components/shared"
 
@@ -26,6 +28,20 @@ export const Admin = (props) => {
         return (
             <Container>
                 <AddManager/>
+            </Container>
+        )
+    }
+    else if(data === "고객문의"){
+        return (
+            <Container>
+                <QuestionListManager/>
+            </Container>
+        )
+    }
+    else if(data === "공지사항"){
+        return (
+            <Container>
+                <NotificationManager/>
             </Container>
         )
     }

@@ -7,28 +7,28 @@ import { useState } from "react";
 import { Form } from 'react-bootstrap';
 import styled from "styled-components";
 
-const CREATE_QUESTION_MUTATION = gql`
-    mutation createQuestion($title:String! $content:String){
-        createQuestion(title:$title content:$content){
+const CREATE_NOTICE_MUTATION = gql`
+    mutation createNotice($title:String! $content:String){
+        createNotice(title:$title content:$content){
             ok
             error
         }
     }
 `;
 
-const InputModal = (props) => {
+const NotificationInputModal = (props) => {
     const {register,handleSubmit,formState,errors,getValues,setError,clearErrors} = useForm({
         mode:"onChange",
     });
     const onCompleted = (data) => {
-        const {createQuestion:{ok,error}} = data;
+        const {createNotice:{ok,error}} = data;
         if(!ok){
             return setError("result",{
                 message:error,
             });
         }
     };
-    const [createQuestion,{loading}] = useMutation(CREATE_QUESTION_MUTATION,{
+    const [createNotice,{loading}] = useMutation(CREATE_NOTICE_MUTATION,{
         onCompleted
     });
     const onSubmitValid = (data) => {
@@ -36,7 +36,7 @@ const InputModal = (props) => {
         if(loading){
             return;
         }
-        createQuestion({
+        createNotice({
             variables:{
                 title,
                 content
@@ -82,4 +82,4 @@ const InputModal = (props) => {
     );
 };
 
-export default InputModal;
+export default NotificationInputModal;

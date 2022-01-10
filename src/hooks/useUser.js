@@ -9,6 +9,7 @@ const ME_QUERY = gql`
             nickname
             profile
             bio
+            isManaged
         }
     }
 `;
