@@ -19,8 +19,6 @@ import { AdminContainer } from "./components/Admin/AdminContainer";
 import io from 'socket.io-client';
 import { VideoCall } from "./screens/VideoCall";
 
-const socket = io.connect('http://localhost:4000')
-
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
 
@@ -42,6 +40,11 @@ function App() {
               <Route path={`${routes.myPage}/:nickname`} exact>
                 <Layout>
                   <MyPage />
+                </Layout>
+              </Route>
+              <Route path={`${routes.myPage}/:nickname/video`}>
+                <Layout>
+                  <VideoCall />
                 </Layout>
               </Route>
               <Route path={`${routes.myPage}/:nickname/add`}>
@@ -67,11 +70,6 @@ function App() {
               <Route path={routes.admin}>
                 {isLoggedIn ? <AdminContainer><Admin /></AdminContainer> : <Login />}
               </Route>
-              {/* <Route path={`${routes.videoCall}`}>
-                <Layout>
-                  <VideoCall />
-                </Layout>
-              </Route> */}
               <Redirect to="/" />
             </Switch>
           </Router>

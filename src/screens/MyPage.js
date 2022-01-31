@@ -63,9 +63,9 @@ export const MyPage = () => {
             <Bar>{data?.seeProfile?.nickname}</Bar>
             <Bar>{data?.seeProfile?.intro}</Bar>
             <button style={{ marginTop: "10px" }}>통화하기</button>
-            {/* <Link to={`${routes.videoCall}`}> */}
-            <button style={{ marginTop: "10px" }}>영상통화</button>
-            {/* </Link> */}
+            <Link to={`${routes.myPage}/${nickname}/video`}>
+                <button style={{ marginTop: "10px" }}>영상통화</button>
+            </Link>
         </Container>
     )
 }
