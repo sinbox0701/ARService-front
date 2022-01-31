@@ -1,8 +1,9 @@
 const routes = {
-    home:"/",
+    home: "/",
     signUp: "/signup",
     myPage: "/mypage",
     admin: "/admin",
+    // videoCall: "/videocall"
 
 };
 

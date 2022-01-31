@@ -15,53 +15,63 @@ import { Layout } from "./components/Layout";
 import { QuestionList } from "./components/add/QuestionList";
 import { Notification } from "./components/add/Notification";
 import { Information } from "./components/add/Information";
-import {AdminContainer} from "./components/Admin/AdminContainer";
+import { AdminContainer } from "./components/Admin/AdminContainer";
+import io from 'socket.io-client';
+import { VideoCall } from "./screens/VideoCall";
+
+const socket = io.connect('http://localhost:4000')
 
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
+
   return (
     <ApolloProvider client={client}>
-          <HelmetProvider>
-          <ThemeProvider theme={lightTheme}>
-          <GlobalStyles/>
+      <HelmetProvider>
+        <ThemeProvider theme={lightTheme}>
+          <GlobalStyles />
           <Router>
             <Switch>
               <Route path={routes.home} exact>
-                {isLoggedIn ? (<Layout> <Home/> </Layout> ): <Login/>}
+                {isLoggedIn ? (<Layout> <Home /> </Layout>) : <Login />}
               </Route>
               {!isLoggedIn ? (
                 <Route path={routes.signUp}>
-                <Signup/>
-              </Route>
+                  <Signup />
+                </Route>
               ) : null}
               <Route path={`${routes.myPage}/:nickname`} exact>
-                <Layout> 
-                  <MyPage/>
+                <Layout>
+                  <MyPage />
                 </Layout>
               </Route>
               <Route path={`${routes.myPage}/:nickname/add`}>
                 <Layout>
-                  <MyPagePlus/>
+                  <MyPagePlus />
                 </Layout>
               </Route>
               <Route path={`${routes.myPage}/:nickname/notification`}>
                 <Layout>
-                  <Notification/>
+                  <Notification />
                 </Layout>
               </Route>
               <Route path={`${routes.myPage}/:nickname/question`}>
                 <Layout>
-                  <QuestionList/>
+                  <QuestionList />
                 </Layout>
               </Route>
               <Route path={`${routes.myPage}/:nickname/information`}>
                 <Layout>
-                  <Information/>
+                  <Information />
                 </Layout>
               </Route>
               <Route path={routes.admin}>
-                {isLoggedIn ? <AdminContainer><Admin/></AdminContainer> : <Login/>}
+                {isLoggedIn ? <AdminContainer><Admin /></AdminContainer> : <Login />}
               </Route>
+              {/* <Route path={`${routes.videoCall}`}>
+                <Layout>
+                  <VideoCall />
+                </Layout>
+              </Route> */}
               <Redirect to="/" />
             </Switch>
           </Router>
@@ -70,5 +80,5 @@ function App() {
     </ApolloProvider>
   );
 }
- 
+
 export default App;

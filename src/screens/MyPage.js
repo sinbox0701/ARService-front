@@ -1,7 +1,9 @@
 import { gql, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { BaseBox } from "../components/shared";
+import routes from "../routes";
 
 const AvatarContainer = styled.div`
   width: 300px;
@@ -47,21 +49,23 @@ const SEE_PROFILE_QUERY = gql`
 `;
 
 export const MyPage = () => {
-    const {nickname} = useParams();
-    const {data} = useQuery(SEE_PROFILE_QUERY,{
-        variables:{
+    const { nickname } = useParams();
+    const { data } = useQuery(SEE_PROFILE_QUERY, {
+        variables: {
             nickname
         }
     })
     return (
         <Container>
             <AvatarContainer>
-                <img style={{maxWidth:"100%"}} src={data?.seeProfile?.profile}/>
+                <img style={{ maxWidth: "100%" }} src={data?.seeProfile?.profile} />
             </AvatarContainer>
             <Bar>{data?.seeProfile?.nickname}</Bar>
             <Bar>{data?.seeProfile?.intro}</Bar>
-            <button style={{marginTop:"10px"}}>통화하기</button>
-            <button style={{marginTop:"10px"}}>영상통화</button>
+            <button style={{ marginTop: "10px" }}>통화하기</button>
+            {/* <Link to={`${routes.videoCall}`}> */}
+            <button style={{ marginTop: "10px" }}>영상통화</button>
+            {/* </Link> */}
         </Container>
     )
 }
