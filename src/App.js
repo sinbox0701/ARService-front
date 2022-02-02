@@ -16,7 +16,6 @@ import { QuestionList } from "./components/add/QuestionList";
 import { Notification } from "./components/add/Notification";
 import { Information } from "./components/add/Information";
 import { AdminContainer } from "./components/Admin/AdminContainer";
-import io from 'socket.io-client';
 import { VideoCall } from "./screens/VideoCall";
 
 function App() {
@@ -42,7 +41,7 @@ function App() {
                   <MyPage />
                 </Layout>
               </Route>
-              <Route path={`${routes.myPage}/:nickname/video`}>
+              <Route path={`${routes.videoCall}/:nickname/video`}>
                 <Layout>
                   <VideoCall />
                 </Layout>

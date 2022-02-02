@@ -33,11 +33,11 @@ display: flex;
 align-items: center;
 justify-content: center;
 `;
- 
+
 const Icon = styled.span`
     margin-left: 15px;
 `;
- 
+
 const Button = styled.span`
     background-color: ${(props) => props.theme.accent};
     border-radius: 4px;
@@ -66,26 +66,26 @@ export const Header = () => {
     const alarmMode = useReactiveVar(alarmModeVar);
     const [toggleAlarm] = useMutation(TOGGLE_ALARM)
     const onSubmit = () => {
-        const toggleAlarmUpdate = (cache,result) =>{
+        const toggleAlarmUpdate = (cache, result) => {
             const {
-                data:{
-                    toggleAlarm:{ok}
+                data: {
+                    toggleAlarm: { ok }
                 }
             } = result;
-            if(!ok){
-                return ;
+            if (!ok) {
+                return;
             }
             cache.modify({
-                id:`User:${loggedInUser.me.id}`,
-                fields:{
-                    ignored(prev){
+                id: `User:${loggedInUser.me.id}`,
+                fields: {
+                    ignored(prev) {
                         return !prev;
                     }
                 }
             })
         };
         toggleAlarm({
-            update:toggleAlarmUpdate
+            update: toggleAlarmUpdate
         });
         alarmModeVar(!alarmMode);
     };
@@ -93,36 +93,48 @@ export const Header = () => {
         <SHeader>
             <Wrapper>
                 <Column>
-                    <Icon onClick={()=>history.goBack()} >
+                    <Icon onClick={() => history.goBack()} >
                         🔙
                     </Icon>
                     {isLoggedIn ? (
                         <>
-                        
-                        {loggedInUser?.me?.bio === "M" ?(
-                            <>
+
+                            {loggedInUser?.me?.bio === "M" ? (
+                                <>
+                                    <Icon>
+                                        <FontAwesomeIcon icon={faStar} style={{ color: "white", backgroundColor: "red", borderRadius: "80%" }} size="lg" />
+                                    </Icon>
+                                    <div>{loggedInUser?.me?.nickname}</div>
+                                    <Icon>
+                                        충전 확인
+                                    </Icon>
+                                </>
+                            ) : (
+                                <>
+                                    <div>{loggedInUser?.me?.nickname}</div>
+                                    <Icon>
+                                        포인트 확인
+                                    </Icon>
+                                </>
+                            )}
                             <Icon>
-                              <FontAwesomeIcon icon={faStar} style={{color:"white", backgroundColor:"red", borderRadius:"80%"}} size="lg" />  
+                                <Link to={`${routes.myPage}/${loggedInUser?.me?.nickname}/add`}>
+                                    더보기
+                                </Link>
                             </Icon>
                             <Icon>
-                                충전 확인
+                                <AlarmModeBtn onClick={onSubmit}>
+                                    <FontAwesomeIcon icon={alarmMode ? faBell : faBellSlash} size="lg" />
+                                </AlarmModeBtn>
                             </Icon>
-                            </>
-                        ):(
                             <Icon>
-                                포인트 확인
+                                <Link to={`${routes.videoCall}/${loggedInUser?.me?.nickname}/video`}>
+                                    <span style={{ backgroundColor: "grey", padding: "5px", color: "white", borderRadius: "10%" }}>
+                                        내 방으로 이동
+                                    </span>
+                                </Link>
+
                             </Icon>
-                        )}
-                        <Icon>
-                            <Link to={`${routes.myPage}/${loggedInUser?.me?.nickname}/add`}>
-                                더보기 
-                            </Link>
-                        </Icon>
-                        <Icon>
-                            <AlarmModeBtn onClick={onSubmit}>
-                                <FontAwesomeIcon icon={ alarmMode ? faBell : faBellSlash} size="lg" />  
-                            </AlarmModeBtn>
-                        </Icon>
                         </>
                     ) : (
                         <Link href={routes.home}><Button>Login</Button></Link>
