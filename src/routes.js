@@ -3,7 +3,7 @@ const routes = {
     signUp: "/signup",
     myPage: "/mypage",
     admin: "/admin",
-    // videoCall: "/videocall"
+    videoCall: "/videocall"
 
 };
 
