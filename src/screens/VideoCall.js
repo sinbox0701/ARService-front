@@ -2,8 +2,13 @@ import styled from "styled-components";
 import { BaseBox } from "../components/shared";
 import io from 'socket.io-client';
 import { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { gql, useQuery, useMutation } from "@apollo/client";
+import { useUser } from "../hooks/useUser";
+import { useForm } from "react-hook-form";
+import routes from "../routes";
+import CreateVideoTimeModal from "../components/Modal/CreateVideoTimeModal";
 
 const pc_config = {
     iceServers: [
@@ -35,6 +40,25 @@ const Container = styled(BaseBox)`
     }
 `;
 
+const VIDEOCALL_CHECK = gql`
+    mutation videoCallCheck($id:Int!){
+        videoCallCheck(id:$id){
+            ok
+            error
+        }
+    }
+`;
+
+const SEE_PROFILE_QUERY = gql`
+    query seeProfile($nickname:String!){
+        seeProfile(nickname:$nickname){
+            id,
+            nickname,
+            videoCall
+        }
+    }
+`;
+
 // const socket = io.connect('http://localhost:4000');
 
 const getWebcam = (callback) => {
@@ -52,17 +76,65 @@ const getWebcam = (callback) => {
 }
 export const VideoCall = () => {
     const { nickname } = useParams();
+    const loggedInUser = useUser();
+    const { data } = useQuery(SEE_PROFILE_QUERY, {
+        variables: {
+            nickname
+        }
+    });
+    const [videoCallCheck] = useMutation(VIDEOCALL_CHECK,{variables:{id:data?.seeProfile?.id}});
+    const onSubmit = () => {
+        
+        if (socketRef.current) {
+            socketRef.current.disconnect();
+            console.log("end");
+        }
+        if (pcRef.current) {
+            pcRef.current.close();
+            console.log("finish");
+            const userVideoUpdate = (cache, result) => {
+            const {
+                data: {
+                    videoCallCheck: { ok }
+                }
+            } = result;
+            if (!ok) {
+                return;
+            }
+            cache.modify({
+                id: `User:${data.seeProfile.id}`,
+                fields: {
+                    videoCall(prev) {
+                        return !prev;
+                    }
+                }
+            })
+        };
+        videoCallCheck({
+            update: userVideoUpdate
+        });
+            const eTime = new Date();
+            console.log(eTime);
+            setEndTime(eTime);
+        }
+        
+        setModal(true);
+    };
+    
     const [playing, setPlaying] = useState(undefined);
     const socketRef = useRef();
     const pcRef = useRef()
     const localVideoRef = useRef(null);
     const remoteVideoRef = useRef(null);
+    const [startTime, setStartTime] = useState();
+    const [endTime, setEndTime] = useState();
+    const [modal, setModal] = useState(false);
 
     const setVideoTracks = async () => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({
                 video: true,
-                audio: false,
+                audio: true,
             });
             if (localVideoRef.current) localVideoRef.current.srcObject = stream;
 
@@ -154,8 +226,13 @@ export const VideoCall = () => {
 
         socketRef.current.on("getCandidate", async (candidate) => {
             if (!pcRef.current) return;
-            await pcRef.current.addIceCandidate(new RTCIceCandidate(candidate));
+            await pcRef.current.addIceCandidate(new RTCIceCandidate(candidate)); 
             console.log("candidate add success")
+            console.log("start");
+            console.log("realStart");
+            const sTime = new Date();
+            console.log(sTime);
+            setStartTime(sTime);
         })
 
         setVideoTracks();
@@ -168,9 +245,14 @@ export const VideoCall = () => {
         return () => {
             if (socketRef.current) {
                 socketRef.current.disconnect();
+                console.log("end");
             }
             if (pcRef.current) {
                 pcRef.current.close();
+                console.log("finish");
+                const eTime = new Date();
+                console.log(eTime);
+                setEndTime(eTime);
             }
         }
 
@@ -186,11 +268,13 @@ export const VideoCall = () => {
 
     return (
         <Container id="myStream">
+             {modal === true ? <CreateVideoTimeModal setModal={setModal} caller={loggedInUser.me.nickname} callee={nickname} startTime={startTime} endTime={endTime} /> : null}
             <video style={{ width: 400, height: 400, margin: 5, backgroundColor: 'black' }} id="otherFace" ref={remoteVideoRef} autoPlay />
             <video style={{ width: 100, height: 100, margin: 5, backgroundColor: 'black' }} ref={localVideoRef} autoPlay />
-            <Link to="/">
-                <button style={{ marginTop: "10px" }}>종료하기</button>
-            </Link>
+            
+            <button style={{ marginTop: "10px" }} onClick={onSubmit}> 종료하기</button>
+            
+            
         </Container>
     )
 }

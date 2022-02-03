@@ -15,7 +15,7 @@ export const logUserIn = (token) => {
 }
 export const logUserOut = () => {
     localStorage.removeItem(TOKEN);
-    window.location.reload();
+    window.location.reload("/");
 }
 
 const authLink = setContext((_,{headers})=>{
