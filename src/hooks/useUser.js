@@ -10,6 +10,8 @@ const ME_QUERY = gql`
             profile
             bio
             isManaged
+            ignored
+            videoCall
         }
     }
 `;
@@ -17,7 +19,8 @@ const ME_QUERY = gql`
 export const useUser = () => {
     const hasToken = useReactiveVar(isLoggedInVar);
     const {data} = useQuery(ME_QUERY,{
-        skip:!hasToken
+        skip:!hasToken,
+        pollInterval:500
     });
     useEffect(()=>{
         if(data?.me === null){

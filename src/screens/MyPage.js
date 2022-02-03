@@ -1,4 +1,4 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -38,12 +38,24 @@ const Bar = styled.div`
     width:50%;
 `;
 
+const VIDEOCALL_CHECK = gql`
+    mutation videoCallCheck($id:Int!){
+        videoCallCheck(id:$id){
+            ok
+            error
+        }
+    }
+`;
+
 const SEE_PROFILE_QUERY = gql`
     query seeProfile($nickname:String!){
         seeProfile(nickname:$nickname){
+            id,
             nickname,
             profile,
-            intro
+            intro,
+            ignored,
+            videoCall
         }
     }
 `;
@@ -54,7 +66,31 @@ export const MyPage = () => {
         variables: {
             nickname
         }
-    })
+    });
+    const [videoCallCheck] = useMutation(VIDEOCALL_CHECK,{variables:{id:data?.seeProfile?.id}});
+    const onSubmit = () => {
+        const userVideoUpdate = (cache, result) => {
+            const {
+                data: {
+                    videoCallCheck: { ok }
+                }
+            } = result;
+            if (!ok) {
+                return;
+            }
+            cache.modify({
+                id: `User:${data.seeProfile.id}`,
+                fields: {
+                    videoCall(prev) {
+                        return !prev;
+                    }
+                }
+            })
+        };
+        videoCallCheck({
+            update: userVideoUpdate
+        });
+    };
     return (
         <Container>
             <AvatarContainer>
@@ -64,7 +100,7 @@ export const MyPage = () => {
             <Bar>{data?.seeProfile?.intro}</Bar>
             <button style={{ marginTop: "10px" }}>통화하기</button>
             <Link to={`${routes.videoCall}/${nickname}/video`}>
-                <button style={{ marginTop: "10px" }}>영상통화</button>
+                <button style={{ marginTop: "10px" }} disabled={!data?.seeProfile?.videoCall} onClick={onSubmit}>영상통화</button>
             </Link>
         </Container>
     )

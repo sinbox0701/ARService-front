@@ -2,6 +2,7 @@ import { gql, useMutation, useReactiveVar } from "@apollo/client";
 import { faBell, faBellSlash } from "@fortawesome/free-regular-svg-icons";
 import { faPhoneVolume, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -62,7 +63,7 @@ const TOGGLE_ALARM = gql`
 export const Header = () => {
     const history = useHistory();
     const isLoggedIn = useReactiveVar(isLoggedInVar);
-    const loggedInUser = useUser();
+    let loggedInUser = useUser();
     const alarmMode = useReactiveVar(alarmModeVar);
     const [toggleAlarm] = useMutation(TOGGLE_ALARM)
     const onSubmit = () => {
@@ -98,7 +99,6 @@ export const Header = () => {
                     </Icon>
                     {isLoggedIn ? (
                         <>
-
                             {loggedInUser?.me?.bio === "M" ? (
                                 <>
                                     <Icon>
@@ -127,14 +127,17 @@ export const Header = () => {
                                     <FontAwesomeIcon icon={alarmMode ? faBell : faBellSlash} size="lg" />
                                 </AlarmModeBtn>
                             </Icon>
-                            <Icon>
-                                <Link to={`${routes.videoCall}/${loggedInUser?.me?.nickname}/video`}>
-                                    <span style={{ backgroundColor: "grey", padding: "5px", color: "white", borderRadius: "10%" }}>
-                                        내 방으로 이동
-                                    </span>
-                                </Link>
-
-                            </Icon>
+                            {loggedInUser?.me?.videoCall === false ? (
+                                <Icon>
+                                    <Link to={`${routes.videoCall}/${loggedInUser?.me?.nickname}/video`}>
+                                        <span style={{ backgroundColor: "grey", padding: "5px", color: "white", borderRadius: "10%" }}>
+                                            내 방으로 이동
+                                        </span>
+                                    </Link>
+                                </Icon>
+                                ): 
+                                null
+                            }
                         </>
                     ) : (
                         <Link href={routes.home}><Button>Login</Button></Link>

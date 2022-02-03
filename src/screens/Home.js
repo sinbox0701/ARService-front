@@ -10,6 +10,7 @@ const SEE_MAN_OR_WOMAN_QUERY = gql`
             id
             nickname
             profile
+            ignored
         }
     }
 `;
@@ -30,22 +31,28 @@ export const Home = () => {
                 <TableBody>
                     {data?.seeMW.map((user) => (
                         <TableRow key={user.id}>
-                            <TableCell>
-                                <AvatarContainer>
-                                    <img style={{ maxWidth: "100%" }} src={user.profile} />
-                                </AvatarContainer>
-                            </TableCell>
-                            <TableCell>
-                                <Link to={`${routes.myPage}/${user.nickname}`}>
-                                    <div>{user.nickname}</div>
-                                    <span style={{ backgroundColor: "grey", padding: "5px", color: "white", borderRadius: "10%" }}>
-                                        프로필 보기
-                                    </span>
-                                </Link>
-                            </TableCell>
-                            <TableCell>
-                                <button>전화하기</button>
-                            </TableCell>
+                            {user.ignored === false ? (
+                                <>
+                                    <TableCell>
+                                        <AvatarContainer>
+                                            <img style={{ maxWidth: "100%" }} src={user.profile} />
+                                        </AvatarContainer>
+                                    </TableCell>
+                                    <TableCell>
+                                        {user.nickname}
+                                    </TableCell>
+                                    <TableCell>
+                                        <Link to={`${routes.myPage}/${user.nickname}`}>
+                                            <span style={{ backgroundColor: "grey", padding: "5px", color: "white", borderRadius: "10%" }}>
+                                                프로필 보기
+                                            </span>
+                                        </Link>
+                                    </TableCell>
+                                    <TableCell>
+                                        <button>전화하기</button>
+                                    </TableCell>
+                                </>
+                            ): null }
                         </TableRow>
                     ))}
                 </TableBody>
