@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { alarmModeVar, isLoggedInVar } from "../apollo";
+import { alarmModeVar, isLoggedInVar, logUserOut } from "../apollo";
 import { useUser } from "../hooks/useUser";
 import routes from "../routes";
 
@@ -126,6 +126,9 @@ export const Header = () => {
                                 <AlarmModeBtn onClick={onSubmit}>
                                     <FontAwesomeIcon icon={alarmMode ? faBell : faBellSlash} size="lg" />
                                 </AlarmModeBtn>
+                            </Icon>
+                            <Icon>
+                                <Button onClick={logUserOut} >로그아웃</Button>
                             </Icon>
                             {loggedInUser?.me?.videoCall === false ? (
                                 <Icon>
