@@ -1,8 +1,7 @@
 import { gql, useMutation, useReactiveVar } from "@apollo/client";
 import { faBell, faBellSlash } from "@fortawesome/free-regular-svg-icons";
-import { faPhoneVolume, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import styled from "styled-components";

@@ -70,7 +70,7 @@ const Bar = styled.div`
 `;
 
 const CommentInputModal = (props) => {
-    const {register,handleSubmit,formState,errors,getValues,setError,clearErrors} = useForm({
+    const {register,handleSubmit,formState,getValues,setError,clearErrors} = useForm({
         mode:"onChange",
     });
     const id = Number(props.value);

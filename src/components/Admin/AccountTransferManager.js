@@ -25,7 +25,6 @@ const Container = styled.div`
 export const AccountTransferManager = () => {
     const [modal, setModal] = useState(false);
     const [Id, setId] = useState();
-    const [createModal, setCreateModal] = useState(false);
     const {data} = useQuery(SEE_ACCOUNT_LIST_QUERY);
     const dateFormat = (data) => {
         const dates =  new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit'}).format(data);

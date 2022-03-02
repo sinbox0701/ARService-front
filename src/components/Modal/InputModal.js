@@ -1,11 +1,8 @@
-import { Flex, Absolute, Input, Submitbutton, TextArea } from "../shared";
+import { Flex, Absolute, Input, Submitbutton} from "../shared";
 import { Background, Window, Popup } from "./Modal";
 import cancel from '../../images/cancel.png';
 import {gql, useMutation} from "@apollo/client";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { Form } from 'react-bootstrap';
-import styled from "styled-components";
 
 const CREATE_QUESTION_MUTATION = gql`
     mutation createQuestion($title:String! $content:String){
@@ -17,7 +14,7 @@ const CREATE_QUESTION_MUTATION = gql`
 `;
 
 const InputModal = (props) => {
-    const {register,handleSubmit,formState,errors,getValues,setError,clearErrors} = useForm({
+    const {register,handleSubmit,formState,getValues,setError,clearErrors} = useForm({
         mode:"onChange",
     });
     const onCompleted = (data) => {

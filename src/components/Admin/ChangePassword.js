@@ -1,8 +1,6 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import {useEffect, useState} from "react"
 import styled from "styled-components";
-import { useUser } from "../../hooks/useUser";
 import FormBox from "../auth/FormBox";
 import FormError from "../auth/FormError";
 import { Input, SearchSubmitbutton } from "../shared";

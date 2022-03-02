@@ -94,7 +94,7 @@ export const MyPage = () => {
     return (
         <Container>
             <AvatarContainer>
-                <img style={{ maxWidth: "100%" }} src={data?.seeProfile?.profile} />
+                <img style={{ maxWidth: "100%" }} alt="profile" src={data?.seeProfile?.profile} />
             </AvatarContainer>
             <Bar>{data?.seeProfile?.nickname}</Bar>
             <Bar>{data?.seeProfile?.intro}</Bar>

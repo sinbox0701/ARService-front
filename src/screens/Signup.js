@@ -109,6 +109,7 @@ export const Signup = () => {
 
     const [option, setOption] = useState("M");
     const onSelect = (e) => {
+        console.log(option);
         return setOption(()=>e.target.value)
     };
 

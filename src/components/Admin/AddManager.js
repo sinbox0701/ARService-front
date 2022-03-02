@@ -1,7 +1,5 @@
 import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
-import routes from "../../routes";
 import FormBox from "../auth/FormBox";
 import FormError from "../auth/FormError";
 import { Input, SearchSubmitbutton } from "../shared";
@@ -16,8 +14,7 @@ const CREATE_MANAGER = gql`
 `;
 
 const AddManager = () => {
-    const history = useHistory();
-    const {register,handleSubmit,errors,formState,setError,clearErrors,getValues} = useForm({
+    const {register,handleSubmit,errors,setError,clearErrors,getValues} = useForm({
         mode:"onChange",
     });
     const onCompleted = (data) => {

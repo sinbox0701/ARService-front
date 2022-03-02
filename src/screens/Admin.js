@@ -1,5 +1,3 @@
-import { Notification } from "../components/add/Notification";
-import { QuestionList } from "../components/add/QuestionList";
 import { AccountTransferManager } from "../components/Admin/AccountTransferManager";
 import AddManager from "../components/Admin/AddManager";
 import ChangePassword from "../components/Admin/ChangePassword";

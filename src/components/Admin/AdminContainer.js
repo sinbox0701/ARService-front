@@ -5,7 +5,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { gql, useQuery } from "@apollo/client";
 import { useEffect } from "react";
@@ -35,7 +34,7 @@ export const AdminContainer = ({children}) => {
           history.push("/");
       }
       
-  },[Me]);
+  },[Me,history]);
 
   const onClick = (data,index) => {
     setData(data);

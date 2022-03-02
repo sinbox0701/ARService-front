@@ -1,4 +1,4 @@
-import { gql, useLazyQuery, useQuery } from "@apollo/client";
+import { gql, useLazyQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { Container } from "../shared"
 import SearchBar from "./SearchBar";
@@ -75,7 +75,7 @@ const SearchUser = ({bio}) => {
             ...((data[6] !=="") &&{createdMaxM:String(data[6])}),
             ...((data[7] !=="") &&{createdMaxD:String(data[7])})
         }});
-    },[data]);
+    },[data,bio,searchUser]);
     const DateFormat = (data) => {
         const temp = new Date(Number(data));
         const created = String(temp).split(" ");
@@ -145,7 +145,7 @@ const SearchUser = ({bio}) => {
                             </TableCell>
                             <TableCell>
                                 <AvatarContainer>
-                                    <img style={{maxWidth:"100%"}} src={user.profile}/>
+                                    <img style={{maxWidth:"100%"}} alt="프로필" src={user.profile}/>
                                 </AvatarContainer>
                             </TableCell>
                             <TableCell>

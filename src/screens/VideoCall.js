@@ -2,12 +2,9 @@ import styled from "styled-components";
 import { BaseBox } from "../components/shared";
 import io from 'socket.io-client';
 import { useEffect, useState, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { gql, useQuery, useMutation } from "@apollo/client";
 import { useUser } from "../hooks/useUser";
-import { useForm } from "react-hook-form";
-import routes from "../routes";
 import CreateVideoTimeModal from "../components/Modal/CreateVideoTimeModal";
 
 const pc_config = {
@@ -61,19 +58,19 @@ const SEE_PROFILE_QUERY = gql`
 
 // const socket = io.connect('http://localhost:4000');
 
-const getWebcam = (callback) => {
-    try {
-        const constraints = {
-            'video': true,
-            'audio': false
-        }
-        navigator.mediaDevices.getUserMedia(constraints)
-            .then(callback);
-    } catch (err) {
-        console.log(err);
-        return undefined;
-    }
-}
+// const getWebcam = (callback) => {
+//     try {
+//         const constraints = {
+//             'video': true,
+//             'audio': false
+//         }
+//         navigator.mediaDevices.getUserMedia(constraints)
+//             .then(callback);
+//     } catch (err) {
+//         console.log(err);
+//         return undefined;
+//     }
+// }
 export const VideoCall = () => {
     const { nickname } = useParams();
     const loggedInUser = useUser();
@@ -121,7 +118,7 @@ export const VideoCall = () => {
         setModal(true);
     };
     
-    const [playing, setPlaying] = useState(undefined);
+    // const [playing, setPlaying] = useState(undefined);
     const socketRef = useRef();
     const pcRef = useRef()
     const localVideoRef = useRef(null);
@@ -263,7 +260,7 @@ export const VideoCall = () => {
         //     setPlaying(true);
         //     localVideoRef.current.srcObject = stream
         // }))
-    }, []);
+    }, [setVideoTracks]);
 
 
     return (
