@@ -90,7 +90,7 @@ export const AdminContainer = ({children}) => {
         <Divider />
         <List>
           <h1>푸쉬</h1>
-          {['푸쉬보내기','푸쉬보내기(중년휴게텔)' ].map((text, index) => (
+          {['푸쉬보내기' ].map((text, index) => (
             <ListItemButton key={text} value={text} selected={selectedIndex === `푸쉬${index}`} onClick={() => onClick(text,`푸쉬${index}`)}>
             <ListItemText primary={text} />
           </ListItemButton>
@@ -117,7 +117,7 @@ export const AdminContainer = ({children}) => {
         <Divider />
         <List>
           <h1>게시판</h1>
-          {['ARS게시판(1)','ARS게시판(2)','ARS게시판(3)','ARS게시판(4)','고객문의','계좌이체','공지사항' ].map((text, index) => (
+          {['고객문의','계좌이체','공지사항' ].map((text, index) => (
             <ListItemButton key={text} value={text} selected={selectedIndex === `게시판${index}`} onClick={() => onClick(text,`게시판${index}`)}>
             <ListItemText primary={text} />
           </ListItemButton>
