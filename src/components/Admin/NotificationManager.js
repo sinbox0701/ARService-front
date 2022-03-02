@@ -49,10 +49,9 @@ export const NotificationManager = () => {
         })
     };
     const dateFormat = (data) => {
-        const dates = Date(data);
-        const temp = dates.split(" ",4);
-        const month = Cal.indexOf(temp[1])+1;
-        const str = `${temp[3]}-${month}-${temp[2]}`;
+        const dates =  new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit'}).format(data);
+        const temp = dates.split("/");
+        const str = `${temp[2]}-${temp[0]}-${temp[1]}`;
         return str;
     };
     

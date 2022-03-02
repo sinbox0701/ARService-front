@@ -1,5 +1,6 @@
 import { Notification } from "../components/add/Notification";
 import { QuestionList } from "../components/add/QuestionList";
+import { AccountTransferManager } from "../components/Admin/AccountTransferManager";
 import AddManager from "../components/Admin/AddManager";
 import ChangePassword from "../components/Admin/ChangePassword";
 import { NotificationManager } from "../components/Admin/NotificationManager";
@@ -35,6 +36,13 @@ export const Admin = (props) => {
         return (
             <Container>
                 <QuestionListManager/>
+            </Container>
+        )
+    }
+    else if(data === "계좌이체"){
+        return (
+            <Container>
+                <AccountTransferManager/>
             </Container>
         )
     }

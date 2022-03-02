@@ -28,7 +28,7 @@ const authLink = setContext((_,{headers})=>{
 });
 export const client = new ApolloClient({
     link: authLink.concat(createUploadLink({
-        uri:"http://localhost:4000/graphql"
+        uri:"http://183.111.206.94:4000/graphql"
     })),
     cache: new InMemoryCache(),
 });

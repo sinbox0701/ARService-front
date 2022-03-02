@@ -17,6 +17,7 @@ import { Notification } from "./components/add/Notification";
 import { Information } from "./components/add/Information";
 import { AdminContainer } from "./components/Admin/AdminContainer";
 import { VideoCall } from "./screens/VideoCall";
+import "./util/fcm";
 
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
