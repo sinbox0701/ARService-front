@@ -1,6 +1,6 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import styled from "styled-components";
-import { Input, Submitbutton } from "../shared";
+import { Submitbutton } from "../shared";
 import { Background, Popup, Window } from "./Modal";
 import { useForm } from "react-hook-form";
 
@@ -71,7 +71,7 @@ const Bar = styled.div`
 `;
 
 const AccountModal = (props) => {
-    const {register,handleSubmit,formState,errors,getValues,setError,clearErrors} = useForm({
+    const {handleSubmit,formState,setError} = useForm({
         mode:"onChange",
     });
     const id = Number(props.value);
@@ -120,9 +120,6 @@ const AccountModal = (props) => {
 
         props.setModal(false)
     };
-    const clearCommentError = () => {
-        clearErrors("result");
-    }
     return (
         <Background>
             <Window>

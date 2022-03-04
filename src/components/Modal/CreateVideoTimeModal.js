@@ -1,4 +1,4 @@
-import { Flex, Absolute, Input, Submitbutton, TextArea } from "../shared";
+import { Flex, Absolute, Submitbutton } from "../shared";
 import { Background, Window, Popup } from "./Modal";
 import cancel from '../../images/cancel.png';
 import {gql, useMutation} from "@apollo/client";
@@ -36,7 +36,7 @@ const VIDEOCALL_START = gql`
 const CreateVideoTimeModal = (props) => {
     const {caller, callee, startTime, endTime} = props;
     const history = useHistory();
-    const {register,handleSubmit,formState,errors,getValues,setError,clearErrors} = useForm({
+    const {handleSubmit,formState,setError} = useForm({
         mode:"onChange",
     });
     const onCompleted = (data) => {
@@ -65,9 +65,7 @@ const CreateVideoTimeModal = (props) => {
         })
         props.setModal(false);
     };
-    const clearSignUpError = () => {
-        clearErrors("result");
-    };
+   
     return (
         <Background>
             <Window>

@@ -35,7 +35,7 @@ export const Home = () => {
                                 <>
                                     <TableCell>
                                         <AvatarContainer>
-                                            <img style={{ maxWidth: "100%" }} src={user.profile} />
+                                            <img style={{ maxWidth: "100%" }} alt="profile" src={user.profile} />
                                         </AvatarContainer>
                                     </TableCell>
                                     <TableCell>

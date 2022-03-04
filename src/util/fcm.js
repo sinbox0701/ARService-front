@@ -18,6 +18,7 @@ getToken(messaging,{
     vapidKey:"BNImNfacoJPlRHDtP122ejtjPMLlYD9OYZMOvLrbdfESKk3TY0NNSSTXVLHKdqeoufCvZxcn9ZCXk0qeztkGnAU"
 }).then((currentToken)=>{
     if(currentToken){
+        console.log(app);
         console.log(currentToken);
     }else{
         console.log("No Regiester Token")

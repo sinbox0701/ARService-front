@@ -23,7 +23,6 @@ const Container = styled.div`
 export const QuestionListManager = () => {
     const [modal, setModal] = useState(false);
     const [Id, setId] = useState();
-    const [createModal, setCreateModal] = useState(false);
     const {data} = useQuery(SEE_QUESTIONS_QUERY);
     const onClick = (e) => {
         const id = Number(e.target.id);
