@@ -1,4 +1,4 @@
-import { gql, useLazyQuery } from "@apollo/client";
+import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { Container } from "../shared"
 import SearchBar from "./SearchBar";
@@ -19,9 +19,47 @@ const AvatarContainer = styled.div`
   overflow: hidden;
 `;
 
+const SEE_USERS = gql`
+    query seeUsers{
+        seeUsers{
+            id
+            nickname
+            age
+            bio
+            profile
+            intro
+            local
+            phone 
+            email
+            loginCount 
+            createdAt
+            updatedAt 
+        }
+    }
+`;
+
+const SEE_WOMANS = gql`
+    query seeMW{
+        seeMW{
+            id
+            nickname
+            age
+            bio
+            profile
+            intro
+            local
+            phone 
+            email
+            loginCount 
+            createdAt
+            updatedAt 
+        }
+    }
+`;
+
 const SEARCH_USER = gql`
     query searchUser(
-            $keyword:String!, 
+            $keyword:String, 
             $searchType:Int,
             $bio:SEX,
             $createdMinY:String,
@@ -62,7 +100,10 @@ const SEARCH_USER = gql`
 
 const SearchUser = ({bio}) => {
     const [data,setData] = useState([]);
+    const {data:UserAll} = useQuery(SEE_USERS);
+    const {data:Womans} = useQuery(SEE_WOMANS);
     const [searchUser,{data:Users}] = useLazyQuery(SEARCH_USER);
+    
     useEffect(()=>{
         searchUser({variables:{
             searchType:Number(data[0]),
@@ -92,96 +133,279 @@ const SearchUser = ({bio}) => {
         </Container>
         {data.length !== 0 ? (
             <Container>
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 700 }} style={{alignContent:"center"}}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell >
-                                ID
-                            </TableCell>
-                            <TableCell >
-                                닉네임
-                            </TableCell>
-                            <TableCell >
-                                프로필
-                            </TableCell>
-                            <TableCell >
-                                나이
-                            </TableCell>
-                            <TableCell >
-                                성별
-                            </TableCell>
-                            <TableCell >
-                                자기소개
-                            </TableCell>
-                            <TableCell >
-                                지역
-                            </TableCell>
-                            <TableCell >
-                                폰번호
-                            </TableCell>
-                            <TableCell >
-                                이메일
-                            </TableCell>
-                            <TableCell >
-                                로그인 횟수
-                            </TableCell>
-                            <TableCell >
-                                가입일
-                            </TableCell>
-                            <TableCell >
-                                마지막 로그인
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                    {Users?.searchUser?.map((user)=>(
-                        <TableRow key={user.id}>
-                            <TableCell>
-                                {user.id}
-                            </TableCell>
-                            <TableCell>
-                                {user.nickname}
-                            </TableCell>
-                            <TableCell>
-                                <AvatarContainer>
-                                    <img style={{maxWidth:"100%"}} alt="프로필" src={user.profile}/>
-                                </AvatarContainer>
-                            </TableCell>
-                            <TableCell>
-                                {user.age}
-                            </TableCell>
-                            <TableCell>
-                                {user.bio}
-                            </TableCell>
-                            <TableCell>
-                                {user.intro}
-                            </TableCell>
-                            <TableCell>
-                                {user.local}
-                            </TableCell>
-                            <TableCell>
-                                {user.phone}
-                            </TableCell>
-                            <TableCell>
-                                {user.email}
-                            </TableCell>
-                            <TableCell>
-                                {user.loginCount}
-                            </TableCell>
-                            <TableCell>
-                                {DateFormat(user.createdAt)}
-                            </TableCell>
-                            <TableCell>
-                                {DateFormat(user.updatedAt)}
-                            </TableCell>
-                        </TableRow>
-                    ))}   
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 700 }} style={{alignContent:"center"}}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell >
+                                    ID
+                                </TableCell>
+                                <TableCell >
+                                    닉네임
+                                </TableCell>
+                                <TableCell >
+                                    프로필
+                                </TableCell>
+                                <TableCell >
+                                    나이
+                                </TableCell>
+                                <TableCell >
+                                    성별
+                                </TableCell>
+                                <TableCell >
+                                    자기소개
+                                </TableCell>
+                                <TableCell >
+                                    지역
+                                </TableCell>
+                                <TableCell >
+                                    폰번호
+                                </TableCell>
+                                <TableCell >
+                                    이메일
+                                </TableCell>
+                                <TableCell >
+                                    로그인 횟수
+                                </TableCell>
+                                <TableCell >
+                                    가입일
+                                </TableCell>
+                                <TableCell >
+                                    마지막 로그인
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                        {Users?.searchUser?.map((user)=>(
+                            <TableRow key={user.id}>
+                                <TableCell>
+                                    {user.id}
+                                </TableCell>
+                                <TableCell>
+                                    {user.nickname}
+                                </TableCell>
+                                <TableCell>
+                                    <AvatarContainer>
+                                        <img style={{maxWidth:"100%"}} alt="프로필" src={user.profile}/>
+                                    </AvatarContainer>
+                                </TableCell>
+                                <TableCell>
+                                    {user.age}
+                                </TableCell>
+                                <TableCell>
+                                    {user.bio}
+                                </TableCell>
+                                <TableCell>
+                                    {user.intro}
+                                </TableCell>
+                                <TableCell>
+                                    {user.local}
+                                </TableCell>
+                                <TableCell>
+                                    {user.phone}
+                                </TableCell>
+                                <TableCell>
+                                    {user.email}
+                                </TableCell>
+                                <TableCell>
+                                    {user.loginCount}
+                                </TableCell>
+                                <TableCell>
+                                    {DateFormat(user.createdAt)}
+                                </TableCell>
+                                <TableCell>
+                                    {DateFormat(user.updatedAt)}
+                                </TableCell>
+                            </TableRow>
+                        ))}   
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </Container>
-        ) : null}
+        ) : ( bio === "전체" ? (
+                <Container>
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 700 }} style={{alignContent:"center"}}>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell >
+                                        ID
+                                    </TableCell>
+                                    <TableCell >
+                                        닉네임
+                                    </TableCell>
+                                    <TableCell >
+                                        프로필
+                                    </TableCell>
+                                    <TableCell >
+                                        나이
+                                    </TableCell>
+                                    <TableCell >
+                                        성별
+                                    </TableCell>
+                                    <TableCell >
+                                        자기소개
+                                    </TableCell>
+                                    <TableCell >
+                                        지역
+                                    </TableCell>
+                                    <TableCell >
+                                        폰번호
+                                    </TableCell>
+                                    <TableCell >
+                                        이메일
+                                    </TableCell>
+                                    <TableCell >
+                                        로그인 횟수
+                                    </TableCell>
+                                    <TableCell >
+                                        가입일
+                                    </TableCell>
+                                    <TableCell >
+                                        마지막 로그인
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                            {UserAll?.seeUsers?.map((user)=>(
+                                <TableRow key={user.id}>
+                                    <TableCell>
+                                        {user.id}
+                                    </TableCell>
+                                    <TableCell>
+                                        {user.nickname}
+                                    </TableCell>
+                                    <TableCell>
+                                        <AvatarContainer>
+                                            <img style={{maxWidth:"100%"}} alt="프로필" src={user.profile}/>
+                                        </AvatarContainer>
+                                    </TableCell>
+                                    <TableCell>
+                                        {user.age}
+                                    </TableCell>
+                                    <TableCell>
+                                        {user.bio}
+                                    </TableCell>
+                                    <TableCell>
+                                        {user.intro}
+                                    </TableCell>
+                                    <TableCell>
+                                        {user.local}
+                                    </TableCell>
+                                    <TableCell>
+                                        {user.phone}
+                                    </TableCell>
+                                    <TableCell>
+                                        {user.email}
+                                    </TableCell>
+                                    <TableCell>
+                                        {user.loginCount}
+                                    </TableCell>
+                                    <TableCell>
+                                        {DateFormat(user.createdAt)}
+                                    </TableCell>
+                                    <TableCell>
+                                        {DateFormat(user.updatedAt)}
+                                    </TableCell>
+                                </TableRow>
+                            ))}   
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Container>
+            ) : (
+                <Container>
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 700 }} style={{alignContent:"center"}}>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell >
+                                        ID
+                                    </TableCell>
+                                    <TableCell >
+                                        닉네임
+                                    </TableCell>
+                                    <TableCell >
+                                        프로필
+                                    </TableCell>
+                                    <TableCell >
+                                        나이
+                                    </TableCell>
+                                    <TableCell >
+                                        성별
+                                    </TableCell>
+                                    <TableCell >
+                                        자기소개
+                                    </TableCell>
+                                    <TableCell >
+                                        지역
+                                    </TableCell>
+                                    <TableCell >
+                                        폰번호
+                                    </TableCell>
+                                    <TableCell >
+                                        이메일
+                                    </TableCell>
+                                    <TableCell >
+                                        로그인 횟수
+                                    </TableCell>
+                                    <TableCell >
+                                        가입일
+                                    </TableCell>
+                                    <TableCell >
+                                        마지막 로그인
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                            {Womans?.seeMW?.map((user)=>(
+                                <TableRow key={user.id}>
+                                    <TableCell>
+                                        {user.id}
+                                    </TableCell>
+                                    <TableCell>
+                                        {user.nickname}
+                                    </TableCell>
+                                    <TableCell>
+                                        <AvatarContainer>
+                                            <img style={{maxWidth:"100%"}} alt="프로필" src={user.profile}/>
+                                        </AvatarContainer>
+                                    </TableCell>
+                                    <TableCell>
+                                        {user.age}
+                                    </TableCell>
+                                    <TableCell>
+                                        {user.bio}
+                                    </TableCell>
+                                    <TableCell>
+                                        {user.intro}
+                                    </TableCell>
+                                    <TableCell>
+                                        {user.local}
+                                    </TableCell>
+                                    <TableCell>
+                                        {user.phone}
+                                    </TableCell>
+                                    <TableCell>
+                                        {user.email}
+                                    </TableCell>
+                                    <TableCell>
+                                        {user.loginCount}
+                                    </TableCell>
+                                    <TableCell>
+                                        {DateFormat(user.createdAt)}
+                                    </TableCell>
+                                    <TableCell>
+                                        {DateFormat(user.updatedAt)}
+                                    </TableCell>
+                                </TableRow>
+                            ))}   
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Container>
+            ) 
+        )}
         </>
     )
 }

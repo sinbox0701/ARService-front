@@ -1,6 +1,7 @@
 import { AccountTransferManager } from "../components/Admin/AccountTransferManager";
 import AddManager from "../components/Admin/AddManager";
 import ChangePassword from "../components/Admin/ChangePassword";
+import { ListVideo } from "../components/Admin/ListVideo";
 import { NotificationManager } from "../components/Admin/NotificationManager";
 import { QuestionListManager } from "../components/Admin/QuestionListManager";
 import SearchUser from "../components/Admin/SearchUser";
@@ -48,6 +49,13 @@ export const Admin = (props) => {
         return (
             <Container>
                 <NotificationManager/>
+            </Container>
+        )
+    }
+    else if(data === "영상 목록"){
+        return (
+            <Container>
+                <ListVideo />
             </Container>
         )
     }

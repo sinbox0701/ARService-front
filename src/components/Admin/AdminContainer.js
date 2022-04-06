@@ -97,17 +97,8 @@ export const AdminContainer = ({children}) => {
         </List>
         <Divider />
         <List>
-          <h1>포인트</h1>
-          {['포인트 목록'].map((text, index) => (
-            <ListItemButton key={text} value={text} selected={selectedIndex === `포인트${index}`} onClick={() => onClick(text,`포인트${index}`)}>
-            <ListItemText primary={text} />
-          </ListItemButton>
-          ))}
-        </List>
-        <Divider />
-        <List>
           <h1>통화내역</h1>
-          {['통화 목록'].map((text, index) => (
+          {['음성 목록','영상 목록'].map((text, index) => (
             <ListItemButton key={text} value={text} selected={selectedIndex === `통화내역${index}`} onClick={() => onClick(text,`통화내역${index}`)}>
             <ListItemText primary={text} />
           </ListItemButton>
@@ -118,8 +109,8 @@ export const AdminContainer = ({children}) => {
           <h1>게시판</h1>
           {['고객문의','계좌이체','공지사항' ].map((text, index) => (
             <ListItemButton key={text} value={text} selected={selectedIndex === `게시판${index}`} onClick={() => onClick(text,`게시판${index}`)}>
-            <ListItemText primary={text} />
-          </ListItemButton>
+              <ListItemText primary={text} />
+            </ListItemButton>
           ))}
         </List>
         <Divider />

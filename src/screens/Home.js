@@ -25,6 +25,7 @@ const AvatarContainer = styled.div`
 
 export const Home = () => {
     const { data } = useQuery(SEE_MAN_OR_WOMAN_QUERY);
+    
     return (
         <TableContainer component={Paper}>
             <Table>

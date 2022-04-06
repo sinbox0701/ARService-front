@@ -260,7 +260,7 @@ export const VideoCall = () => {
         //     setPlaying(true);
         //     localVideoRef.current.srcObject = stream
         // }))
-    }, [setVideoTracks]);
+    }, []);
 
 
     return (

@@ -18,6 +18,7 @@ import { Information } from "./components/add/Information";
 import { AdminContainer } from "./components/Admin/AdminContainer";
 import { VideoCall } from "./screens/VideoCall";
 import "./util/fcm";
+import Account from "./components/add/Account";
 
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
@@ -60,6 +61,11 @@ function App() {
               <Route path={`${routes.myPage}/:nickname/question`}>
                 <Layout>
                   <QuestionList />
+                </Layout>
+              </Route>
+              <Route path={`${routes.myPage}/:nickname/account`}>
+                <Layout>
+                  <Account />
                 </Layout>
               </Route>
               <Route path={`${routes.myPage}/:nickname/information`}>
